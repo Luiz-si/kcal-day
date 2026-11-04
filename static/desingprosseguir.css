@@ -1,0 +1,272 @@
+/* Visual dos formul?rios: azul, roxo e brilho suave. */
+/* Faz a largura e a altura incluírem o preenchimento e a borda. */
+* { box-sizing: border-box; }
+/* Define o espaçamento, a fonte e o fundo em degradê da página. */
+body {
+    margin: 0;
+    padding: 36px 20px;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    color: white;
+    background: linear-gradient(to bottom, #92ccf3, #1f1647);
+}
+/* Centraliza o título principal e ajusta seu tamanho à largura da tela. */
+h1 {
+    width: fit-content;
+    max-width: 100%;
+    margin: 0 auto 20px;
+    padding: 16px 24px;
+    text-align: center;
+    font-size: clamp(26px, 4vw, 36px);
+    background: #1f1647;
+    border: 2px solid white;
+    border-radius: 14px;
+    box-shadow: 0 0 25px #ffffff80;
+}
+/* Define o espaçamento entre as linhas dos parágrafos. */
+p { line-height: 1.6; }
+/* Centraliza o texto de introdução e define sua cor e tamanho. */
+.introducao { color: #1f1647; text-align: center; font-size: 18px; }
+/* Estiliza a linha que separa as seções. */
+hr { border: 0; height: 2px; background: #1f164740; margin: 28px auto; max-width: 860px; }
+/* Centraliza o formulário e define o visual do painel. */
+form {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: clamp(20px, 4vw, 36px);
+    background: #1f1647;
+    border: 1px solid #ffffffb3;
+    border-radius: 24px;
+    box-shadow: 0 16px 40px #1f164733;
+}
+/* Estiliza o texto que indica a etapa atual. */
+.etapa { font-size: 12px; font-weight: bold; letter-spacing: 2px; color: #92ccf3; }
+/* Define o tamanho e as margens do título do formulário. */
+form h2 { margin: 10px 0 28px; font-size: 26px; }
+/* Distribui os campos em duas colunas do mesmo tamanho. */
+.campos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+/* Define o espaçamento e a aparência do cartão de cada campo. */
+.campo {
+    min-width: 0;
+    padding: 18px;
+    border: 1px solid #ffffff38;
+    border-radius: 14px;
+    background: #ffffff08;
+    transition: border-color .2s ease, background-color .2s ease;
+}
+/* Realça o cartão enquanto um controle dentro dele está em foco. */
+.campo:focus-within { border-color: #92ccf3; background: #92ccf312; }
+/* Exibe o rótulo acima do controle e destaca seu texto. */
+label { display: block; margin-bottom: 12px; font-size: 17px; font-weight: bold; line-height: 1.5; }
+/* Estiliza os campos visíveis e as listas de opções. */
+input:not([type="hidden"]), select {
+    width: 100%;
+    min-height: 48px;
+    padding: 12px;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    background: #f5f8ff;
+    color: #1f1647;
+    font: inherit;
+}
+/* Mostra o cursor de mão sobre as listas de opções. */
+select { cursor: pointer; }
+/* Destaca o elemento focado durante a navegação pelo teclado. */
+input:focus-visible, select:focus-visible, button:focus-visible, a:focus-visible {
+    outline: 3px solid #92ccf3;
+    outline-offset: 4px;
+}
+/* Define o tamanho, as cores e o brilho dos botões. */
+#calcular, button {
+    width: 100%;
+    min-height: 54px;
+    margin-top: 28px;
+    padding: 14px;
+    background: #1e173f;
+    color: white;
+    border: 2px solid white;
+    border-radius: 10px;
+    box-shadow: 0 0 15px #ffffff60;
+    font: bold 20px Arial, sans-serif;
+    cursor: pointer;
+    transition: background-color .3s ease, box-shadow .3s ease;
+}
+/* Muda a cor e aumenta o brilho ao passar o mouse sobre o botão. */
+#calcular:hover, button:hover { background: #34265e; box-shadow: 0 0 22px #ffffff90; }
+/* Define a cor dos links e afasta o sublinhado do texto. */
+a { color: white; text-underline-offset: 4px; }
+/* Centraliza o link de voltar e amplia sua área clicável. */
+.voltar { display: block; width: fit-content; margin: 28px auto 0; padding: 10px; }
+/* Destaca as mensagens de alerta com uma borda rosada. */
+p[role="alert"] { max-width: 860px; margin: 20px auto; padding: 16px; background: #1f1647; border: 2px solid #ffb4b4; border-radius: 12px; }
+/* Em telas de até 600 px, usa uma coluna e reduz os espaçamentos. */
+@media (max-width: 600px) {
+    body { padding: 24px 14px; }
+    .campos { grid-template-columns: 1fr; gap: 14px; }
+    h1 { padding: 14px; }
+    .campo { padding: 14px; }
+}
+/* Desativa as transições para quem prefere movimento reduzido. */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition: none !important; }
+}
+
+/* Resumo, rotina e resultados da segunda etapa. */
+/* Estiliza os subtítulos que são filhos diretos do corpo da página. */
+body > h2 {
+    max-width: 860px;
+    margin: 20px auto;
+    padding: 18px 24px;
+    background: #1f1647;
+    border: 2px solid white;
+    border-radius: 16px;
+    text-align: center;
+    font-size: clamp(20px, 3vw, 28px);
+}
+/* Cria espaço acima da seção de rotina. */
+.rotina { margin-top: 20px; }
+/* Estiliza a nota explicativa abaixo dos campos. */
+.nota { margin: 24px 0 0; color: #d2d9ef; font-size: 14px; }
+
+#total {
+    width: 900px;
+    max-width: 100%;
+    margin: 28px auto 20px;
+    padding: clamp(12px, 2.5vw, 18px) clamp(10px, 3vw, 24px);
+    text-align: center;
+    font-size: clamp(14px, 4vw, 21px);
+    line-height: 1.35;
+    white-space: nowrap;
+    background: #1f1647;
+    border: 2px solid #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 16px #ffffff38;
+}
+
+#total span {
+    color: #b9e9ff;
+    font-weight: bold;
+    font-variant-numeric: tabular-nums;
+}
+
+/* ===== RESULTADOS E OBJETIVOS CALÓRICOS ===== */
+
+/* Centraliza os cartões com a mesma largura e altura na mesma linha. */
+.painel-resultados {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+    gap: clamp(12px, 2vw, 18px);
+    max-width: 960px;
+    margin: 20px auto 28px;
+}
+
+/* Aplica o mesmo acabamento aos dois painéis. */
+.resultados,
+.objetivos-caloricos {
+    padding: clamp(14px, 2vw, 18px);
+    background: #1f1647;
+    border: 1px solid #92ccf380;
+    border-radius: 14px;
+    overflow-wrap: anywhere;
+}
+
+.painel-resultados h2 {
+    margin: 0 0 12px;
+    color: #92ccf3;
+    font-size: 20px;
+}
+
+/* Destaca a explicação sobre a média diária dos treinos. */
+.resultados .nota {
+    margin: 12px 0 0;
+    padding: 10px 12px;
+    background: #92ccf312;
+    border-radius: 8px;
+}
+
+/* Alinha os rótulos e valores dos detalhes do gasto. */
+#dados {
+    margin: 0;
+}
+
+#dados div {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: baseline;
+    gap: 12px;
+    padding: 12px 0;
+    border-top: 1px solid #92ccf34d;
+}
+
+#dados small {
+    display: block;
+    margin-top: 4px;
+    color: #d2d9ef;
+}
+
+#dados dd {
+    margin: 0;
+    color: #b9e9ff;
+    font-weight: bold;
+    font-size: clamp(12px, 2.5vw, 15px);
+    font-variant-numeric: tabular-nums;
+}
+
+/* Separa as linhas e alinha os valores à direita. */
+.objetivos-caloricos table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.objetivos-caloricos th,
+.objetivos-caloricos td {
+    padding: 10px 6px;
+    border-bottom: 1px solid #92ccf34d;
+    text-align: left;
+}
+
+.objetivos-caloricos thead th {
+    color: #d2d9ef;
+}
+
+.objetivos-caloricos td,
+.objetivos-caloricos thead th:last-child {
+    text-align: right;
+}
+
+.objetivos-caloricos td {
+    font-weight: bold;
+    font-variant-numeric: tabular-nums;
+}
+
+.objetivos-caloricos tbody tr:first-child {
+    color: #92ccf3;
+    background: #92ccf312;
+}
+
+@media (hover: hover) {
+    .objetivos-caloricos tbody tr:hover {
+        background: #92ccf326;
+    }
+}
+
+.objetivos-caloricos .nota {
+    margin: 12px 0 0;
+}
+
+/* Em telas estreitas, coloca a tabela abaixo dos resultados. */
+@media (max-width: 700px) {
+    .painel-resultados {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+
+
+
+
+
+
+

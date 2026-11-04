@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Gasto energético — Kcal Day</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='desingprosseguir.css') }}">
+</head>
+
+<body>
+    {% if taxa_basal is defined and taxa_basal is not none and gasto_total is not defined %}
+    <h1> Gasto energético em repouso</h1>
+    <h2>Seu gasto estimado em repouso: {{ taxa_basal | round(0) | int }} kcal/dia</h2>
+    {% endif %}
+    {% if error %}
+    <p role="alert">{{ error }}</p>
+    {% endif %}
+    <hr>
+    <form action="/prosseguir" method="post">
+        <input type="hidden" name="peso" value="{{ peso if peso is not none else '' }}">
+        <input type="hidden" name="basal" value="{{ taxa_basal if taxa_basal is not none else '' }}">
+        <input type="hidden" name="idade" value="{{ idade if idade is not none else '' }}">
+        <div class="etapa">ETAPA 2 DE 2</div>
+        <h2>Sua rotina de atividades</h2>
+        <div class="campos">
+<div class="campo"><label for="treinos">Treinos por semana:</label>
+                
+                    <select id="treinos" name="treinos" required>
+                        <option value="0">Não treino</option>
+                        <option value="1">1 vez</option>
+                        <option value="2">2 vezes</option>
+                        <option value="3" selected>3 vezes</option>
+                        <option value="4">4 vezes</option>
+                        <option value="5">5 vezes</option>
+                        <option value="6">6 vezes</option>
+                        <option value="7">Todos os dias</option>
+                    </select></div>
+<div class="campo"><label for="descanso">Descanso entre séries:</label>
+                
+                    <select id="descanso" name="descanso" required>
+                        <option value="0">Não se aplica</option>
+                        <option value="0.5">30 segundos</option>
+                        <option value="1" selected>1 minuto</option>
+                        <option value="1.5">1 minuto e 30 segundos</option>
+                        <option value="2">2 minutos</option>
+                        <option value="3">3 minutos</option>
+                        <option value="5">5 minutos</option>
+                    </select></div>
+<div class="campo"><label for="horas">Tempo do treino, descanso incluso:</label>
+                
+                    <select id="horas" name="horas" required>
+                        <option value="0">Não se aplica</option>
+                        <option value="0.5">30 minutos</option>
+                        <option value="1" selected>1 hora</option>
+                        <option value="1.5">1 hora e 30 minutos</option>
+                        <option value="2">2 horas</option>
+                        <option value="2.5">2 horas e 30 minutos</option>
+                        <option value="3">3 horas</option>
+                    </select></div>
+        </div>
+
+
+        <div class="campo rotina">
+        <label for="atividade_fora">
+            Como é um dia típico seu fora da academia?
+        </label>
+        <select id="atividade_fora" name="atividade_fora" required>
+            <option value="" disabled selected hidden>Selecione sua rotina</option>
+            <option value="sedentario">Sedentário — trabalho ou estudo quase sempre sentado e caminho pouco</option>
+            <option value="Leve">Levemente ativo — fico bastante em pé, como no atendimento em balcão, e caminho pouco</option>
+            <option value="Moderado">Moderadamente ativo — caminho com frequência, como em trajetos a pé e tarefas do dia a dia</option>
+            <option value="Intensa">Intenso — passo várias horas em pé e caminho por longos períodos, como em um turno com deslocamentos constantes</option>
+
+        </select>
+
+
+
+        </div>
+        <p class="nota">O cálculo assume 30 segundos de execução por série, seguidos do descanso informado.</p>
+        <button type="submit">Calcular gasto total</button>
+    </form>
+
+    {% if gasto_total is defined %}
+    <p id="total"><strong>Gasto diário total</strong> <span>{{ gasto_total }} kcal/dia</span></p>
+
+    <div class="painel-resultados">
+        <!-- Resultados do gasto energético -->
+        <section class="resultados" aria-labelledby="titulo-dados">
+            <h2 id="titulo-dados">Detalhes do gasto</h2>
+            <dl id="dados">
+                <div><dt>Taxa basal <small>Gasto em repouso</small></dt><dd>{{ taxa_basal }} kcal/dia</dd></div>
+                <div><dt>Rotina fora da academia</dt><dd>{{ atividade_fora }} kcal/dia</dd></div>
+                <div><dt>Musculação <small>Média diária</small></dt><dd>{{ gasto_academia }} kcal/dia</dd></div>
+            </dl>
+            <p class="nota"><strong>Por que uma média diária?</strong> O gasto extra dos treinos da semana é dividido por sete. Assim, o total acima representa um dia médio, e o gasto de um dia com treino pode ser maior que o de um dia de descanso.</p>
+        </section>
+
+        <!-- Tabela de objetivos calóricos -->
+        <section class="objetivos-caloricos" aria-labelledby="titulo-objetivos">
+            <h2 id="titulo-objetivos">Objetivos calóricos</h2>
+            {% if objetivos %}
+            <table aria-describedby="nota-objetivos">
+                <thead>
+                    <tr><th scope="col">Objetivo</th><th scope="col">Consumo estimado (kcal/dia)</th></tr>
+                </thead>
+                <tbody>
+                    <!-- Manutenção usa o gasto total exibido ao lado -->
+                    <tr><th scope="row">Manutenção</th><td>{{ objetivos.manutencao }}</td></tr>
+                    <!-- Cenários de déficit e ganho de peso -->
+                    <tr><th scope="row">Déficit calórico</th><td>{{ objetivos.deficit if objetivos.deficit is not none else 'Não exibido' }}</td></tr>
+                    <tr><th scope="row">Ganho de peso e massa muscular</th><td>{{ objetivos.ganho_massa }}</td></tr>
+                </tbody>
+            </table>
+            <p id="nota-objetivos" class="nota">O déficit e o superávit usam um ajuste de {{ objetivos.ajuste }} kcal/dia em torno da manutenção. A referência é perder ou ganhar cerca de 240 g de peso corporal por semana. O ritmo real varia. A estimativa do gasto exclui o efeito térmico dos alimentos.
+                {% if objetivos.deficit is none %}O cenário de déficit ficou abaixo do limite de exibição da calculadora.{% endif %}</p>
+            {% else %}
+            <p class="nota">Os cenários calóricos são exibidos para pessoas com idade informada de 18 anos ou mais.</p>
+            {% endif %}
+        </section>
+    </div>
+    {% endif %}
+
+    <p class="referencias">Referências:
+        <a href="https://pubmed.ncbi.nlm.nih.gov/2305711/">Mifflin–St Jeor (1990), repouso</a>;
+        <a href="https://pacompendium.com/conditioning-exercise/">Compêndio 2024, musculação</a> e
+        <a href="https://pacompendium.com/adult-compendium/">atividades cotidianas</a>.
+        Os valores são estimativas populacionais, não uma medição individual.
+    </p>
+
+
+<a class="voltar" href="/">Voltar ao início</a>
+</body>
+
+</html>

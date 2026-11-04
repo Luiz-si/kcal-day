@@ -1,0 +1,59 @@
+﻿/* Página inicial. Define a fonte, o espaço nas bordas e o fundo em degradê. */
+body {
+    padding: 20px;
+    background-color: #92ccf3;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to bottom, #92ccf3, #1f1647);
+    min-height: 100vh;
+}
+
+/* Título “Bem-vindo ao Kcal Day!”. Centraliza a caixa e adiciona borda e brilho. */
+h1 {
+    border: 2px solid #f7f4f4;
+    padding: 30px;
+    background-color: #1f1647;
+    border-radius: 15px;
+    width: fit-content;
+    margin: auto;
+    color: white;
+    box-shadow: 0 0 20px white;
+}
+/* Parágrafos da página inicial. Define o tamanho do texto e centraliza a caixa. */
+p {
+
+    font-size: 18px;
+    line-height: 1.6;
+    color: #faf4f4;  
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #1f1647;
+    margin: 20px auto;
+    width: fit-content;
+    border-radius: 20px;
+    border: 2px solid #ffffff;
+}
+
+/* Links “Sobre Nós” e “Calcule suas calorias”. Dá aparência de botão aos links. */
+a {
+    color: #ffffff;
+    background-color: #1f1647;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+    padding: 6px;
+    border-radius: 10px;
+    border: 2px solid #ffffff;
+}
+/* Separador horizontal (hr). Define a altura e a borda roxa. */
+hr {
+    border: 1px solid #1f1647;
+
+    height: 30px;
+
+}
+
+/* Repete o degradê e a altura mínima do primeiro bloco body. */
+body {
+    background: linear-gradient(to bottom, #92ccf3, #1f1647);
+    min-height: 100vh;
+}

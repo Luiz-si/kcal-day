@@ -1,0 +1,89 @@
+/* Visual dos formul?rios: azul, roxo e brilho suave. */
+* { box-sizing: border-box; }
+body {
+    margin: 0;
+    padding: 36px 20px;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    color: white;
+    background: linear-gradient(to bottom, #92ccf3, #1f1647);
+}
+h1 {
+    width: fit-content;
+    max-width: 100%;
+    margin: 0 auto 20px;
+    padding: 16px 24px;
+    text-align: center;
+    font-size: clamp(26px, 4vw, 36px);
+    background: #1f1647;
+    border: 2px solid white;
+    border-radius: 14px;
+    box-shadow: 0 0 25px #ffffff80;
+}
+p { line-height: 1.6; }
+.introducao { color: #1f1647; text-align: center; font-size: 18px; }
+hr { border: 0; height: 2px; background: #1f164740; margin: 28px auto; max-width: 860px; }
+form {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: clamp(20px, 4vw, 36px);
+    background: #1f1647;
+    border: 1px solid #ffffffb3;
+    border-radius: 24px;
+    box-shadow: 0 16px 40px #1f164733;
+}
+.etapa { font-size: 12px; font-weight: bold; letter-spacing: 2px; color: #92ccf3; }
+form h2 { margin: 10px 0 28px; font-size: 26px; }
+.campos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.campo {
+    min-width: 0;
+    padding: 18px;
+    border: 1px solid #ffffff38;
+    border-radius: 14px;
+    background: #ffffff08;
+    transition: border-color .2s ease, background-color .2s ease;
+}
+.campo:focus-within { border-color: #92ccf3; background: #92ccf312; }
+label { display: block; margin-bottom: 12px; font-size: 17px; font-weight: bold; line-height: 1.5; }
+input:not([type="hidden"]), select {
+    width: 100%;
+    min-height: 48px;
+    padding: 12px;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    background: #f5f8ff;
+    color: #1f1647;
+    font: inherit;
+}
+select { cursor: pointer; }
+input:focus-visible, select:focus-visible, button:focus-visible, a:focus-visible {
+    outline: 3px solid #92ccf3;
+    outline-offset: 4px;
+}
+#calcular, button {
+    width: 100%;
+    min-height: 54px;
+    margin-top: 28px;
+    padding: 14px;
+    background: #1e173f;
+    color: white;
+    border: 2px solid white;
+    border-radius: 10px;
+    box-shadow: 0 0 15px #ffffff60;
+    font: bold 20px Arial, sans-serif;
+    cursor: pointer;
+    transition: background-color .3s ease, box-shadow .3s ease;
+}
+#calcular:hover, button:hover { background: #34265e; box-shadow: 0 0 22px #ffffff90; }
+a { color: white; text-underline-offset: 4px; }
+.voltar { display: block; width: fit-content; margin: 28px auto 0; padding: 10px; }
+p[role="alert"] { max-width: 860px; margin: 20px auto; padding: 16px; background: #1f1647; border: 2px solid #ffb4b4; border-radius: 12px; }
+@media (max-width: 600px) {
+    body { padding: 24px 14px; }
+    .campos { grid-template-columns: 1fr; gap: 14px; }
+    h1 { padding: 14px; }
+    .campo { padding: 14px; }
+}
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition: none !important; }
+}
